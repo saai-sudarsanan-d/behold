@@ -2,8 +2,8 @@ version: '3'
 
 services:
   web1:
-    image: pynode
-    container_name: node_A
+    image: hyena
+    container_name: hyenaA
     depends_on:
       - redis
     environment:
@@ -11,14 +11,16 @@ services:
       - BID=A
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - MASTER_HOST=ringmaster
+      - MASTER_PORT=9091
     ports:
       - "5001:5000"
     networks:
       - nodenet
 
   web2:
-    image: pynode
-    container_name: node_B
+    image: hyena
+    container_name: hyenaB
     depends_on:
       - redis
     environment:
@@ -26,14 +28,16 @@ services:
       - BID=B
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - MASTER_HOST=ringmaster
+      - MASTER_PORT=9091      
     ports:
       - "5002:5000"
     networks:
       - nodenet
 
   web3:
-    image: pynode
-    container_name: node_C
+    image: hyena
+    container_name: hyenaC
     depends_on:
       - redis
     environment:
@@ -41,14 +45,16 @@ services:
       - BID=C
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - MASTER_HOST=ringmaster
+      - MASTER_PORT=9091      
     ports:
       - "5003:5000"
     networks:
       - nodenet
 
   web4:
-    image: pynode
-    container_name: node_D
+    image: hyena
+    container_name: hyenaD
     depends_on:
       - redis
     environment:
@@ -56,13 +62,27 @@ services:
       - BID=D
       - REDIS_HOST=redis
       - REDIS_PORT=6379
+      - MASTER_HOST=ringmaster
+      - MASTER_PORT=9091      
     ports:
       - "5004:5000"
     networks:
       - nodenet
 
+  ringmaster:
+    image: ringmaster
+    container_name: ringmaster
+    environment:
+      - PORT=9091    
+    ports:
+      - "9091:9091"
+    networks:
+      - nodenet
+
   redis:
     image: redis
+    depends_on:
+      - ringmaster
     container_name: redis_container
     networks:
       - nodenet
