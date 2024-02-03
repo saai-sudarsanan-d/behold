@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+  web1:
+    image: pynode
+    container_name: node_A
+    depends_on:
+      - redis
+    environment:
+      - PORT=5000
+      - BID=A
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "5001:5000"
+    networks:
+      - nodenet
+
+  web2:
+    image: pynode
+    container_name: node_B
+    depends_on:
+      - redis
+    environment:
+      - PORT=5000
+      - BID=B
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "5002:5000"
+    networks:
+      - nodenet
+
+  web3:
+    image: pynode
+    container_name: node_C
+    depends_on:
+      - redis
+    environment:
+      - PORT=5000
+      - BID=C
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "5003:5000"
+    networks:
+      - nodenet
+
+  web4:
+    image: pynode
+    container_name: node_D
+    depends_on:
+      - redis
+    environment:
+      - PORT=5000
+      - BID=D
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    ports:
+      - "5004:5000"
+    networks:
+      - nodenet
+
+  redis:
+    image: redis
+    container_name: redis_container
+    networks:
+      - nodenet
+
+networks:
+  nodenet:
+    driver: bridge
