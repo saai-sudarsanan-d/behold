@@ -11,3 +11,5 @@ A master that takes care of them
 ```
 docker build -t ringmaster -f DockerfileMaster  .
 ```
+
+![](system.png)
